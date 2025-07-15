@@ -1,0 +1,54 @@
+plugins {
+    id 'java'
+    id 'eclipse'
+    id 'org.jetbrains.gradle.plugin.idea-ext' version '1.1.10'
+}
+
+description = "Velocity parent module"
+
+def crescentnexus_version = "1.0.0"
+
+void addRepositories(Project project) {
+    project.repositories {
+        mavenCentral()
+        maven { url = uri('https://repo.papermc.io/repository/maven-public/') }
+        maven { url = uri('https://oss.sonatype.org/content/groups/public/') }
+        maven { url = uri("https://maven.mrnavastar.me/releases") }
+    }
+}
+
+subprojects {
+    apply plugin: 'maven-publish'
+    apply plugin: 'java-library'
+    apply plugin: 'org.jetbrains.gradle.plugin.idea-ext'
+
+    addRepositories(project)
+
+    dependencies {
+        compileOnly("com.velocitypowered:velocity-api:3.4.0-SNAPSHOT")
+        implementation("me.mrnavastar.protoweaver:proxy:1.4.8")
+        annotationProcessor("com.velocitypowered:velocity-api:3.4.0-SNAPSHOT")
+    }
+
+    java {
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
+    }
+
+    project.version = [
+            "crescent-nexus": crescentnexus_version
+    ].get(project.name)
+    project.group = "it.crescentsun"
+    project.description = project.description ?: "No description provided"
+
+    tasks.withType(JavaCompile).configureEach {
+        options.encoding = "UTF-8"
+    }
+
+    build {
+        group = 'always-used'
+    }
+    copyJarToRemote {
+        group = 'always-used'
+    }
+}

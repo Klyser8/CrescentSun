@@ -1,0 +1,7 @@
+description = "Project for Crescent Sun Network"
+
+tasks.register("buildAll") {
+    group = 'always-used'
+    description = 'Builds all subprojects'
+    dependsOn(subprojects.collect { it.tasks.named("build") })
+}

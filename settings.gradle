@@ -20,23 +20,16 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = 'CrescentSun'
-include 'impl:crescent-core'
-include 'impl:jumpwarps'
-include 'impl:artifacts'
-include 'impl:command-tomes'
-include 'impl:crystals'
-include 'impl:dropnames'
-
-include 'api:crescent-core'
-include 'api:crescent-common'
-include 'api:artifacts'
-include 'api:crystals'
-findProject(':api:crystals')?.name = 'crystals' // This line ensures the project name is set correctly
-
-include 'velocity:crescent_nexus'
-findProject(':velocity:crescent_nexus')?.name = 'crescent_nexus'
 include 'paper'
-include 'velocity'
 include 'paper:api'
 findProject(':paper:api')?.name = 'api'
+include 'paper:impl'
+findProject(':paper:impl')?.name = 'impl'
 
+include("paper:api:crescent-core")
+findProject(":api:crescent-core")?.name = "crescent-core-api"
+
+include("paper:impl:crescent-core")
+findProject(":impl:crescent-core")?.name = "crescent-core-impl"
+
+include 'velocity'

@@ -6,7 +6,7 @@ plugins {
 
 description = "Velocity parent module"
 
-def crescentnexus_version = "1.0.0"
+def crescentnexus_version = project.findProperty('crescentnexus_version')
 
 void addRepositories(Project project) {
     project.repositories {
